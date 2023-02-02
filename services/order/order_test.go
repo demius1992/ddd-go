@@ -1,26 +1,27 @@
-package services
+package order
 
 import (
+	"github.com/percybolmer/tavern/domain/customer"
+	"github.com/percybolmer/tavern/domain/product"
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/percybolmer/ddd-go/aggregate"
 )
 
-func init_products(t *testing.T) []aggregate.Product {
-	beer, err := aggregate.NewProduct("Beer", "Healthy Beverage", 1.99)
+func init_products(t *testing.T) []product.Product {
+	beer, err := product.NewProduct("Beer", "Healthy Beverage", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
-	peenuts, err := aggregate.NewProduct("Peenuts", "Healthy Snacks", 0.99)
+	peenuts, err := product.NewProduct("Peenuts", "Healthy Snacks", 0.99)
 	if err != nil {
 		t.Error(err)
 	}
-	wine, err := aggregate.NewProduct("Wine", "Healthy Snacks", 0.99)
+	wine, err := product.NewProduct("Wine", "Healthy Snacks", 0.99)
 	if err != nil {
 		t.Error(err)
 	}
-	products := []aggregate.Product{
+	products := []product.Product{
 		beer, peenuts, wine,
 	}
 	return products
@@ -33,13 +34,12 @@ func TestOrder_NewOrderService(t *testing.T) {
 		WithMemoryCustomerRepository(),
 		WithMemoryProductRepository(products),
 	)
-
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Add Customer
-	cust, err := aggregate.NewCustomer("Percy")
+	cust, err := customer.NewCustomer("Percy")
 	if err != nil {
 		t.Error(err)
 	}
@@ -59,5 +59,4 @@ func TestOrder_NewOrderService(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
 }

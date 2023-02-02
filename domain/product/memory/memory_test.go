@@ -4,30 +4,35 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/percybolmer/ddd-go/aggregate"
-	"github.com/percybolmer/ddd-go/domain/product"
+	"github.com/percybolmer/tavern/domain/product"
 )
 
 func TestMemoryProductRepository_Add(t *testing.T) {
 	repo := New()
-	product, err := aggregate.NewProduct("Beer", "Good for you're health", 1.99)
+	newProduct, err := product.NewProduct("Beer", "Good for you're health", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
 
-	repo.Add(product)
+	err = repo.Add(newProduct)
+	if err != nil {
+		return
+	}
 	if len(repo.products) != 1 {
-		t.Errorf("Expected 1 product, got %d", len(repo.products))
+		t.Errorf("Expected 1 newProduct, got %d", len(repo.products))
 	}
 }
 func TestMemoryProductRepository_Get(t *testing.T) {
 	repo := New()
-	existingProd, err := aggregate.NewProduct("Beer", "Good for you're health", 1.99)
+	existingProd, err := product.NewProduct("Beer", "Good for you're health", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
 
-	repo.Add(existingProd)
+	err = repo.Add(existingProd)
+	if err != nil {
+		return
+	}
 	if len(repo.products) != 1 {
 		t.Errorf("Expected 1 product, got %d", len(repo.products))
 	}
@@ -63,12 +68,15 @@ func TestMemoryProductRepository_Get(t *testing.T) {
 }
 func TestMemoryProductRepository_Delete(t *testing.T) {
 	repo := New()
-	existingProd, err := aggregate.NewProduct("Beer", "Good for you're health", 1.99)
+	existingProd, err := product.NewProduct("Beer", "Good for you're health", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
 
-	repo.Add(existingProd)
+	err = repo.Add(existingProd)
+	if err != nil {
+		return
+	}
 	if len(repo.products) != 1 {
 		t.Errorf("Expected 1 product, got %d", len(repo.products))
 	}

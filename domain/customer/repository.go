@@ -1,11 +1,10 @@
-// Package Customer holds all the domain logic for the customer domain.
+// Package customer holds all the domain logic for the customer domain.
 package customer
 
 import (
 	"errors"
 
 	"github.com/google/uuid"
-	"github.com/percybolmer/ddd-go/aggregate"
 )
 
 var (
@@ -20,7 +19,7 @@ var (
 // CustomerRepository is a interface that defines the rules around what a customer repository
 // Has to be able to perform
 type CustomerRepository interface {
-	Get(uuid.UUID) (aggregate.Customer, error)
-	Add(aggregate.Customer) error
-	Update(aggregate.Customer) error
+	Get(uuid.UUID) (Customer, error)
+	Add(Customer) error
+	Update(Customer) error
 }
